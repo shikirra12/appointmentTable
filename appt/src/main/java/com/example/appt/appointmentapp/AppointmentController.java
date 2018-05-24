@@ -1,8 +1,39 @@
 package com.example.appt.appointmentapp;
 
-import java.util.Scanner;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
-public class AppointmentController {
+@WebServlet("/")
+public class AppointmentController extends HttpServlet {
+
+    protected void getPostInfo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        String searchValue = request.getParameter("search");
+        String apptDate = request.getParameter("date");
+        String apptTime = request.getParameter("time");
+        String apptDescription = request.getParameter("description");
+
+        Appointment appointment = new Appointment();
+
+        appointment.setDate(apptDate);
+        appointment.setTime(apptTime);
+        appointment.setDescriptionOfAppt(apptDescription);
+
+        System.out.println("Search: " + searchValue);
+        System.out.println("Date: " + apptDate);
+        System.out.println("Time: " + apptTime);
+        System.out.println("Description: " +apptDescription);
+    }
+
+    public static void writeIt (Appointment appointment){
+        try{
+            appointment.
+        }
+    }
 
 //    @Autowired
 //    AppointmentRepository appointmentRepository;
@@ -31,7 +62,9 @@ public class AppointmentController {
 //            return "new appointment was created";
 //
 //    }
-    Scanner scanner = new Scanner(System.in);
+//    Scanner scanner = new Scanner(System.in);
 
-    String searchInput = scanner.hasNext(#search);
+//    String searchInput = scanner.hasNext(#sear);
+
+
 }

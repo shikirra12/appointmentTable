@@ -4,39 +4,43 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 import javax.persistence.Column;
 import javax.persistence.Table;
-import java.sql.Time;
-import java.util.Date;
 
 @EntityScan
 @Table(name = "appointments")
 public class Appointment {
 
     @Column(name = "date", nullable = false)
-    Date date;
+    String date;
 
     @Column(name = "time", nullable = false)
-    Time time;
+    String time;
 
     @Column(name = "description", nullable = false)
     String descriptionOfAppt;
 
-    public Appointment(){
+    public Appointment(String date, String time, String descriptionOfAppt){
+        this.date = date;
+        this.time = time;
+        this.descriptionOfAppt = descriptionOfAppt;
+    }
+
+    public Appointment() {
 
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
-    public Time getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(Time time) {
+    public void setTime(String time) {
         this.time = time;
     }
 

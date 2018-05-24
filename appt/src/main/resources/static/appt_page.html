@@ -38,19 +38,19 @@
     <br>
     <br>
 
-    <form hidden action="/appt_page.html" method="post">
+    <form hidden action="appt_page.html" method="POST" id="makeAppt">
         <button id="cancel">Cancel</button>
-        <input value="Enter Date YY-MM-DD" type="Date">
-        <input value="Enter Time  HH:mm" type="Time">
-        <input value="Enter Description" type="text">
+        <input name="date" placeholder="Enter Date YY-MM-DD" type="text">
+        <input name="time" placeholder="Enter Time  HH:mm" type="text">
+        <input name="description" placeholder="Enter Description" type="text">
         <input type="submit">
     </form>
 
     <br>
     <br>
 
-    <form>
-        <input id=search type="text" value="Search descriptions">
+    <form name="searchAppt" method="POST" action="appt_page.html">
+        <input name="search" id=search type="text" value="Search descriptions">
         <button>Search</button>
     </form>
 
