@@ -5,28 +5,28 @@
     <title>Appointments</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>
-$(document).ready(function(){
-    $("#cancel").click(function(){
+    $(document).ready(function(){
+        $("#cancel").click(function(){
         $("form").hide();
-    });
-    $("#new").click(function(){
+      });
+        $("#new").click(function(){
         $("form").show();
+      });
     });
-});
-</script>
-<script>
-$(document).ready(function(){
-    $("#new").on("click", function() {
-     let textSwapping = $(this);
-     if (textSwapping.text() == textSwapping.data("text-swap")) {
-        textSwapping.text(textSwapping.data("text-original"));
-     } else {
-        textSwapping.data("text-original", textSwapping.text());
-        textSwapping.text(textSwapping.data("text-swap"));
-     }
-   });
-});
-</script>
+    </script>
+    <script>
+    $(document).ready(function(){
+        $("#new").on("click", function() {
+            let textSwapping = $(this);
+            if (textSwapping.text() == textSwapping.data("text-swap")) {
+                textSwapping.text(textSwapping.data("text-original"));
+        } else {
+            textSwapping.data("text-original", textSwapping.text());
+            textSwapping.text(textSwapping.data("text-swap"));
+        }
+       });
+    });
+    </script>
 </head>
 <body>
 
@@ -38,7 +38,7 @@ $(document).ready(function(){
     <br>
     <br>
 
-    <form hidden action="/appt_page.html">
+    <form hidden action="/appt_page.html" method="post">
         <button id="cancel">Cancel</button>
         <input value="Enter Date YY-MM-DD" type="Date">
         <input value="Enter Time  HH:mm" type="Time">
@@ -50,7 +50,7 @@ $(document).ready(function(){
     <br>
 
     <form>
-        <input type="text" value="Search descriptions">
+        <input id=search type="text" value="Search descriptions">
         <button>Search</button>
     </form>
 
