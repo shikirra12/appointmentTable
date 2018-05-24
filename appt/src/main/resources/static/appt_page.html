@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Appointments</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+$(document).ready(function(){
+    $("#cancel").click(function(){
+        $("form").hide();
+    });
+    $("#new").click(function(){
+        $("form").show();
+    });
+});
+</script>
+<script>
+$(document).ready(function(){
+    $("#new").on("click", function() {
+     let textSwapping = $(this);
+     if (textSwapping.text() == textSwapping.data("text-swap")) {
+        textSwapping.text(textSwapping.data("text-original"));
+     } else {
+        textSwapping.data("text-original", textSwapping.text());
+        textSwapping.text(textSwapping.data("text-swap"));
+     }
+   });
+});
+</script>
+</head>
+<body>
+
+    <!--<div th:text="${error}"></div>-->
+    <br>
+    <br>
+
+    <button id="new" data-text-original="New" data-text-swap="Add">New</button>
+    <br>
+    <br>
+
+    <form hidden action="/appt_page.html">
+        <button id="cancel">Cancel</button>
+        <input value="Enter Date YY-MM-DD" type="Date">
+        <input value="Enter Time  HH:mm" type="Time">
+        <input value="Enter Description" type="text">
+        <input type="submit">
+    </form>
+
+    <br>
+    <br>
+
+    <form>
+        <input type="text" value="Search descriptions">
+        <button>Search</button>
+    </form>
+
+    <br>
+    <br>
+
+    <table>
+        <tr>
+            <td>Date</td>
+            <td>Time</td>
+            <td>Description</td>
+        </tr>
+        <tr>
+            <td th:each="${date}"></td>
+            <td th:each="${time}"></td>
+            <td th:each="${description}"></td>
+        </tr>
+    </table>
+
+</body>
+</html>
