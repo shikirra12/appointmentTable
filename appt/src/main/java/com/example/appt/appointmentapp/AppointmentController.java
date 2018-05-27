@@ -1,70 +1,93 @@
 package com.example.appt.appointmentapp;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
-@WebServlet("/")
-public class AppointmentController extends HttpServlet {
+import java.sql.*;
 
-    protected void getPostInfo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//import javax.servlet.http.HttpServlet;
 
-        String searchValue = request.getParameter("search");
-        String apptDate = request.getParameter("date");
-        String apptTime = request.getParameter("time");
-        String apptDescription = request.getParameter("description");
 
-        Appointment appointment = new Appointment();
+//@WebServlet("/")
+public class AppointmentController {
 
-        appointment.setDate(apptDate);
-        appointment.setTime(apptTime);
-        appointment.setDescriptionOfAppt(apptDescription);
+        public static final String databaseName = "appointment.db";
+        public static final String connectionString = "jdbc:sqlite:D\\databases\\" + databaseName;
 
-        System.out.println("Search: " + searchValue);
-        System.out.println("Date: " + apptDate);
-        System.out.println("Time: " + apptTime);
-        System.out.println("Description: " +apptDescription);
-    }
+        public static final String appointmentsTable = "appointments";
 
-    public static void writeIt (Appointment appointment){
-        try{
-            appointment.
+        public static final String column_date = "date";
+        public static final String column_time = "time";
+        public static final String column_description = "description";
+
+    @PostMapping("/makeAppt")
+    public String appointmentDatabase (@RequestBody Appointment appointment){
+
+    try {
+        Connection connection = DriverManager.getConnection(connectionString);
+        Statement statement = connection.createStatement();
+
+        statement.execute("DROP TABLE IF EXISTS " + appointmentsTable);
+        statement.execute("CREATE TABLE IF NOT EXISTS " + appointmentsTable +
+                " (" + column_date + " text, " + column_time + " text, " + column_description + " text " + ")");
+
+//        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+//        preparedStatement.setString(1, column_date);
+//        preparedStatement.setString(2, column_time);
+//        preparedStatement.setString(3, column_description);
+//        preparedStatement.executeUpdate();
+
+       String appointmentDate = appointment.getDate();
+       String appointmentTime = appointment.getTime();
+       String appointmentDescription = appointment.getDescriptionOfAppt();
+
+       Appointment createNewAppointment = new Appointment();
+
+       createNewAppointment.setDate(appointmentDate);
+       createNewAppointment.setTime(appointmentTime);
+       createNewAppointment.setDescriptionOfAppt(appointmentDescription);
+
+        statement.execute("INSERT INTO appointments(date, time, description)" + "VALUES('2018-10-22', '11:30', 'stuff')");
+        statement.execute("INSERT INTO appointments(date, time, description)" + "VALUES('" + appointmentDate + "', " + appointmentTime + ", '" + appointmentDescription + "')");
+
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM " + appointmentsTable);
+        while (resultSet.next()){
+            System.out.println(resultSet.getString(column_date) + "" +
+                    resultSet.getString(column_time) + "" +
+                    resultSet.getString(column_description));
         }
+
+        statement.close();
+        connection.close();
+
+    } catch (SQLException e){
+        System.out.println("Connection failed: " + e.getMessage());
+        e.printStackTrace();
+    }
+        return "appt_page.html";
     }
 
-//    @Autowired
-//    AppointmentRepository appointmentRepository;
-
-//    @PostMapping("/")
-//    public String appointmentForm (@RequestBody Appointment appointment){
+    //	public void insert(String date, String time, String description) {
+//		String sql = "INSERT INTO appointments VALUES(?, ?, ?)";
 //
-//        Date  apptDate = appointment.getDate();
+//		try {
 //
-//        Time  apptTime = appointment.getTime();
+//			PreparedStatement preparedStatement =
+//		}
+//	}
+//    @RequestMapping("/makeAppt")
+//    public String createAppt (@RequestParam(value ="date"), String date, @RequestParam(value="time"), String time, @RequestParam(value ="description"), String description, Model model) {
+//        Appointment appointment = new Appointment();
 //
-//        String apptDescription = appointment.getDescriptionOfAppt();
-//
-//        Appointment createNewAppointment = new Appointment();
-//
-//        createNewAppointment.setDate(apptDate);
-//        createNewAppointment.setTime(apptTime);
-//
-//        appointmentRepository.add(createNewAppointment);
-//
-//        if (apptDate == null || apptTime == null || apptDescription == null){
-//            return "please fill in each field";
-//        } else if (){
-//
-//        }
-//            return "new appointment was created";
-//
+//        appointment.setDate(date);
+//        appointment.setTime(time);
+//        appointment.setDescriptionOfAppt(description);
 //    }
-//    Scanner scanner = new Scanner(System.in);
-
-//    String searchInput = scanner.hasNext(#sear);
-
-
+//    public void insert(String date, String time, String description) {
+//        String sql = "INSERT INTO appointments VALUES(?, ?, ?)";
+//
+//        try {
+//            Connection connection = this.connect();
+//        }
+//    }
 }

@@ -38,7 +38,7 @@
     <br>
     <br>
 
-    <form hidden action="appt_page.html" method="POST" id="makeAppt">
+    <form hidden action="/makeAppt" method="POST" id="makeAppt">
         <button id="cancel">Cancel</button>
         <input name="date" placeholder="Enter Date YY-MM-DD" type="text">
         <input name="time" placeholder="Enter Time  HH:mm" type="text">
@@ -64,9 +64,9 @@
             <td>Description</td>
         </tr>
         <tr>
-            <td th:each="${date}"></td>
-            <td th:each="${time}"></td>
-            <td th:each="${description}"></td>
+            <td th:each="${appointment.date}"></td>
+            <td th:each="${appointment.time}"></td>
+            <td th:each="${appointment.description}"></td>
         </tr>
     </table>
 
